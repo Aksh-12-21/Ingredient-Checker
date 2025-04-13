@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>AayushJivinPro</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>Ingredient Safety Checker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Analyze Page -->
+    <div id="analyzePage" class="page active">
+        <div class="header">
+            <h1>Ingredient Analyzer</h1>
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="analyze">Analyze</div>
+            <div class="tab" data-tab="history">History</div>
+            <div class="tab" data-tab="learn">Learn</div>
+        </div>
+
+        <div class="content-section">
+            <div class="input-field">
+                <label>Product Name (Optional)</label>
+                <input type="text" id="productName" placeholder="e.g., 'Maggie Noodles'">
+            </div>
+
+            <div class="input-field">
+                <label>Ingredients List</label>
+                <textarea id="ingredientsList" placeholder="Enter ingredients separated by commas or new lines"></textarea>
+            </div>
+
+            <button id="analyzeBtn" class="btn btn-primary">
+                <i class="fas fa-search btn-icon"></i>Analyze Ingredients
+            </button>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <div class="scan-card">
+                <h3 class="scan-title">Scan Ingredients Label</h3>
+                <div class="instructions">
+                    <ol>
+                        <li>Take a clear photo of the ingredients list</li>
+                        <li>Ensure text is visible and well-lit</li>
+                        <li>We'll extract ingredients automatically</li>
+                    </ol>
+                </div>
+                <button id="scanBtn" class="btn btn-secondary">
+                    <i class="fas fa-camera btn-icon"></i>Scan Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scan Page -->
+    <div id="scanPage" class="page">
+        <div class="header">
+            <button id="backBtn" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Scan Ingredients</h1>
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="scan-content">
+            <p class="scan-description">Upload an image of ingredients list</p>
+
+            <div class="scan-instructions">
+                <h3>Instructions</h3>
+                <ol>
+                    <li>Hold camera parallel to ingredients list</li>
+                    <li>Make sure text is clear and not blurry</li>
+                    <li>Avoid glare and shadows</li>
+                    <li>The app will extract and parse ingredients</li>
+                </ol>
+            </div>
+
+            <video id="cameraPreview" autoplay playsinline></video>
+            
+            <div class="scan-actions">
+                <label for="fileUpload" class="btn btn-secondary">
+                    <i class="fas fa-upload btn-icon"></i>Upload Image
+                </label>
+                <input type="file" id="fileUpload" accept="image/*" class="file-input">
+                
+                <button id="cameraBtn" class="btn btn-secondary">
+                    <i class="fas fa-camera btn-icon"></i>Take Photo
+                </button>
+                
+                <button id="captureBtn" class="btn btn-primary" style="display: none;">
+                    <i class="fas fa-camera btn-icon"></i>Capture
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Page -->
+    <div id="resultsPage" class="page">
+        <div class="header">
+            <button id="backToAnalyze" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Analysis Results</h1>
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="results-content">
+            <div class="results-header">
+                <h2 id="resultsProductName">Scanned Product</h2>
+                <p id="ingredientsCount">0 ingredients analyzed</p>
+            </div>
+
+            <div class="risk-assessment">
+                <h3>Overall Risk Assessment</h3>
+                <div class="risk-display">
+                    <span id="riskLevel" class="risk-badge low">
+                        <i class="fas fa-leaf"></i> Low Risk
+                    </span>
+                    <span id="riskScore">Score: 0.0/3.0</span>
+                </div>
+            </div>
+
+            <div class="risk-meter">
+                <div class="risk-level low"></div>
+                <div class="risk-level medium"></div>
+                <div class="risk-level high"></div>
+                <div class="risk-indicator" id="riskIndicator" style="left: 0%"></div>
+            </div>
+
+            <div id="ingredientsAnalysis">
+                <!-- Ingredients will be added here dynamically -->
+            </div>
+
+            <button id="saveAnalysisBtn" class="btn btn-primary">
+                <i class="fas fa-save btn-icon"></i>Save Analysis
+            </button>
+        </div>
+    </div>
+
+    <!-- History Page -->
+    <div id="historyPage" class="page">
+        <div class="header">
+            <button id="backToAnalyzeFromHistory" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>History</h1>
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+
+        <div id="historyList">
+            <!-- History items will be added here dynamically -->
+        </div>
+    </div>
+
+    <!-- Learn Page -->
+    <div id="learnPage" class="page">
+        <div class="header">
+            <button id="backToAnalyzeFromLearn" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Learn</h1>
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="learn-content">
+            <div class="learn-card">
+                <h3><i class="fas fa-prescription-bottle-alt"></i> Food Additives</h3>
+                <p>Learn about common additives and their potential health effects</p>
+                <button class="learn-more">Explore →</button>
+            </div>
+
+            <div class="learn-card">
+                <h3><i class="fas fa-allergies"></i> Common Allergens</h3>
+                <p>Identify ingredients that commonly cause allergic reactions</p>
+                <button class="learn-more">Explore →</button>
+            </div>
+
+            <div class="learn-card">
+                <h3><i class="fas fa-shield-alt"></i> Preservatives</h3>
+                <p>Understand different types of preservatives used in products</p>
+                <button class="learn-more">Explore →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modalMediaContainer"></div>
+            <div class="ocr-progress">Ready to process</div>
+            <button id="processImageBtn" class="btn btn-primary">
+                <i class="fas fa-magic btn-icon"></i>Extract Ingredients
+            </button>
+        </div>
+    </div>
+
+    <!-- History Item Template -->
+    <template id="historyItemTemplate">
+        <div class="history-item">
+            <div class="history-item-content">
+                <div class="history-product"></div>
+                <div class="history-date"></div>
+            </div>
+            <div class="history-item-actions">
+                <span class="history-risk"></span>
+                <button class="delete-history-btn">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </template>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
